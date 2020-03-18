@@ -1,13 +1,13 @@
 <template>
   <div class="container">
     <!-- 博客首页 -->
-    <logo />
-    <div class="main content">
+
+    <div class="main">
       <!-- 帖子集合 -->
       <div class="nodeList">
         <!-- 帖子分类 -->
         <div class="nodeTagList">
-          <a href class="tagItem tabSelected">创意1</a>
+          <a href class="tagItem tabSelected"><nuxt-link to="/theme">创意1</nuxt-link> </a>
           <a href class="tagItem">创意1</a>
           <a href class="tagItem">创意1</a>
           <a href class="tagItem">创意1</a>
@@ -56,7 +56,7 @@
             </p>
           </div>
           <div class="inputComment">
-            <textarea name id  maxlength="1000"></textarea>
+            <textarea name id maxlength="1000"></textarea>
             <div class="submitComments">
               <button class="sure">
                 <strong>回复</strong>
@@ -69,22 +69,9 @@
           </div>
         </div>
       </div>
-      <!-- 综合信息 -->
-      <div class="kinds"></div>
     </div>
   </div>
 </template>
-
-<script>
-import Logo from "~/components/Logo.vue";
-
-export default {
-  components: {
-    Logo
-  }
-};
-</script>
-
 <style lang="scss">
 .container {
   margin: 0 auto;
@@ -104,15 +91,13 @@ export default {
 }
 .main {
   width: 100%;
-  margin-top: 20px;
-
   @include flex(row, flex-start, flex-start);
   .nodeList {
     flex: 1;
     min-height: 600px;
 
     .nodeTagList {
-       background: white;
+      background: white;
       padding: 6px;
       border-bottom: 1px solid $borderColor;
       @include flex(row, flex-start, flex-start);
@@ -221,8 +206,6 @@ export default {
           resize: none; //去掉右下角
           border-radius: 6px;
           outline: none;
-
-          
         }
       }
       .submitComments {
@@ -255,12 +238,6 @@ export default {
         }
       }
     }
-  }
-  .kinds {
-    width: 200px;
-    background: white;
-    margin-left: 10px;
-    min-height: 600px;
   }
 }
 </style>

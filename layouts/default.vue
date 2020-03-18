@@ -1,13 +1,32 @@
 <template>
   <div class="app">
-    <nuxt />
+    <!-- 头部 -->
+    <logo />
+    <!-- 路由区域 -->
+    <div class="showNodeContent content">
+      <nuxt class="routerContent" />
+      <!-- 右侧区域 -->
+      <userinfor class="rightContent" />
+    </div>
+    <!-- 底部 -->
+    <bottom />
   </div>
 </template>
-
-<style>
+<script>
+import Logo from "~/components/Logo.vue";
+import bottom from "~/components/bottom.vue";
+import userinfor from "~/components/userinfor.vue";
+export default {
+  components: {
+    bottom,
+    userinfor,
+    Logo
+  }
+};
+</script>
+<style lang="scss">
 html {
-  font-family: 'Source Sans Pro', -apple-system, BlinkMacSystemFont, 'Segoe UI',
-    Roboto, 'Helvetica Neue', Arial, sans-serif;
+ font-family: "Helvetica Neue", "Luxi Sans", "DejaVu Sans", "Segoe UI", "Hiragino Sans GB", "Microsoft Yahei", sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -16,8 +35,21 @@ html {
   -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
-.app{
-  width:100%;
+.app {
+  width: 100%;
+  .showNodeContent {
+      margin-top: 20px;
+    @include flex(row, flex-start, flex-start);
+    .routerContent{
+      flex:1;
+    }
+  }
+  .rightContent {
+    width: 200px;
+    background: white;
+    margin-left: 10px;
+    min-height: 600px;
+  }
 }
 *,
 *:before,
@@ -26,7 +58,7 @@ html {
   margin: 0;
   list-style: none;
   text-decoration: none;
-  padding:0;
+  padding: 0;
 }
 .button--green {
   display: inline-block;
