@@ -7,30 +7,26 @@
       <div class="nodeList">
         <!-- 帖子分类 -->
         <div class="nodeTagList">
-          <a href class="tagItem tabSelected"><nuxt-link to="/theme">创意1</nuxt-link> </a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
-          <a href class="tagItem">创意1</a>
+          <nuxt-link
+           to="theme"
+            :class="index==0?'tabSelected tagItem':'tagItem'"
+            v-for="(item,index) in nodeList"
+            :key="item.id"
+          >{{item.nodeName}}</nuxt-link>
         </div>
         <div class="themeList">
-          <div class="floor" v-for="item in 15" :key="item">
+          <div class="floor" v-for="(item,index) in themeList" :key="index">
             <img src alt class="userAvatar" />
             <div class="themeContent">
-              <a class="title">今天很开心哦</a>
+              <a class="title" @click="toRoute(item.themeId)">{{item.themeTitle}}</a>
               <p class="smallFont">
                 <label for class="small">
-                  <a class="nodeName">程序员</a>
+                  <a class="nodeName">{{item.nodeName}}</a>
                 </label>
                 <label for class="small">
                   <strong>
-                    <a class="nickname">呆子</a>
+                    <a class="nickname">{{item.nickname}}</a>
+
                   </strong>
                 </label>
                 <label for class="publishTime small">1分钟前</label>
@@ -44,34 +40,45 @@
             </div>
             <div for class="commentNum">12</div>
           </div>
-        </div>
-        <!-- 评论区 -->
-        <div class="comment">
-          <div class="prompt">
-            <!-- 提示 -->
-            <h3>添加一条新回复</h3>
-            <p>
-              <a href>取消回复框停靠</a>
-              <a href>回到顶部</a>
-            </p>
-          </div>
-          <div class="inputComment">
-            <textarea name id maxlength="1000"></textarea>
-            <div class="submitComments">
-              <button class="sure">
-                <strong>回复</strong>
-              </button>
-              <label for class="prompt">请尽量让自己的回复能够对别人有帮助^--^</label>
-            </div>
-          </div>
-          <div class="backIndex">
-            <a href>《《《 back index</a>
-          </div>
+          <nuxt-link to="/signin">登陆</nuxt-link>
         </div>
       </div>
     </div>
   </div>
 </template>
+<script>
+export default {
+  async asyncData({ $axios }) {
+    const result_nodeList = await $axios.get("/api/node");
+    const result_themeList=await $axios.get("/api/index")
+    return {
+      nodeList: result_nodeList.apiData.nodeList,
+      themeList:result_themeList.apiData.re_themeList,
+    };
+  },
+  data() {
+    return {
+      selectedIndex: 0
+    };
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start();
+      setTimeout(() => this.$nuxt.$loading.finish(), 500);
+    });
+  },
+  methods:{
+     toRoute(id){
+       this.$router.push({
+         path:"/theme",
+         query:{
+           themeId:id
+         }
+       })
+     }
+  }
+};
+</script>
 <style lang="scss">
 .container {
   margin: 0 auto;
@@ -180,61 +187,6 @@
           display: block;
           margin-left: auto;
           color: white;
-        }
-      }
-    }
-    .comment {
-      width: 100%;
-      background: white;
-      margin-top: 20px;
-
-      border-bottom: 1px solid $borderColor;
-      .prompt,
-      .submitComments {
-        padding: 0 6px;
-        @include flex(row, space-between, center);
-        border-bottom: 1px solid $borderColor;
-      }
-      .inputComment {
-        flex: 1;
-        textarea {
-          display: block;
-          width: calc(100% - 12px);
-          margin: 15px auto 15px;
-          min-height: 100px;
-          padding: 6px;
-          resize: none; //去掉右下角
-          border-radius: 6px;
-          outline: none;
-        }
-      }
-      .submitComments {
-        padding-bottom: 15px;
-        button {
-          display: block;
-          padding: 5px 0;
-          min-width: 100px;
-          cursor: pointer;
-        }
-        button:hover {
-          pointer-events: painted;
-        }
-        label {
-          border-bottom: none;
-        }
-      }
-      .backIndex {
-        @include flex(row, flex-end, center);
-        background: white;
-        padding: 6px;
-        a {
-          padding-right: 6px;
-          text-decoration: none;
-          color: black;
-        }
-        a:hover {
-          cursor: pointer;
-          text-decoration: underline;
         }
       }
     }

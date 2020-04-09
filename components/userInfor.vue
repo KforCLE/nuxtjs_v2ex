@@ -45,8 +45,9 @@
     </div>
   </div>
 </template>
-<style lang="scss">
+<style lang="scss" scope>
 .userInfor {
+      width: 200px;
   padding: 6px 0;
   .imgRow {
     padding: 0 6px;

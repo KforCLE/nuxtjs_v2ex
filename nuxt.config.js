@@ -30,7 +30,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '@/plugins/axios'
+    
   ],
   /*
   ** Nuxt.js dev-modules
@@ -43,6 +45,7 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    "@nuxtjs/proxy",
     '@nuxtjs/pwa',
     '@nuxtjs/style-resources'
   ],
@@ -54,8 +57,6 @@ export default {
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
   */
-  axios: {
-  },
   /*
   ** Build configuration
   */
@@ -64,6 +65,26 @@ export default {
     ** You can extend webpack config here
     */
     extend (config, ctx) {
+    },
+    vendor:['axios']
+  },
+  // 生产环境
+  prod:(process.env.NODE_ENV=="production"),
+  env:{
+    requestUrl:this.prod?"http://prod.url":"http://127.0.0.1:7001"
+  },
+  // 配置axios的代理
+  axios: {
+    proxy: true, // 表示开启代理
+    credentials: true // 表示跨域请求时是否需要使用凭证
+  },
+  proxy: {
+    '/api': {
+      target: 'http://127.0.0.1:7001', // 目标接口域名
+      changeOrigin: true, // 表示是否跨域
+      pathRewrite: {
+        '^/api': '/', // 把 /api 替换成 /
+      }
     }
   }
 }

@@ -63,6 +63,9 @@
         border: 1px solid #ccc;
         border-radius: 6px;
         padding-left: 10px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        outline: none;
       }
     }
       //  操作块

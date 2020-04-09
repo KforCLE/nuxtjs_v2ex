@@ -45,7 +45,6 @@ html {
     }
   }
   .rightContent {
-    width: 200px;
     background: white;
     margin-left: 10px;
     min-height: 600px;
